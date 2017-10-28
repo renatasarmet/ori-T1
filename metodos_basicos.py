@@ -47,6 +47,20 @@ def insere():
                 bloco.incrementaQtdRegistros()
                 arq.write(bloco.retornaString())
 
+            elif int(w) == 5:
+                arq.seek(posicao)
+                string = arq.read(TAM_BLOCO)
+                arq.seek(posicao)
+
+                bloco.completaAtravesString(string)
+
+                regInvalido = bloco.numeroRegistroInvalido() #verificando se o bloco possui algum registro invalido
+
+                if regInvalido != -1:           # se existir registro invalido, substitui la
+                    fim = 1
+                    bloco.Registros[regInvalido] = novo_registro
+                    arq.write(bloco.retornaString())
+
             elif int(w) < 5:     #se ainda couber registro no bloco
                 fim = 1
                 # insere registro no bloco
@@ -56,15 +70,20 @@ def insere():
 
                 bloco.completaAtravesString(string)
 
-                bloco.Registros[int(w)] = novo_registro
+                regInvalido = bloco.numeroRegistroInvalido() #verificando se o bloco possui algum registro invalido
 
-                bloco.incrementaQtdRegistros()
+                if regInvalido != -1:           # se existir registro invalido, substitui la
+                    bloco.Registros[regInvalido] = novo_registro
+
+                else:                           # se nao existir registro invalido, coloca no final
+                    bloco.Registros[int(w)] = novo_registro
+                    bloco.incrementaQtdRegistros()
 
                 arq.write(bloco.retornaString())
 
-            else:
-                posicao += TAM_BLOCO      #se nao cabe mais nesse bloco, como ele tem tamanho fixo de 512 bytes, vai pro proximo bloco, isto é, dali 512 posicoes
-                arq.seek(posicao)
+
+            posicao += TAM_BLOCO      #se nao cabe mais nesse bloco, como ele tem tamanho fixo de 512 bytes, vai pro proximo bloco, isto é, dali 512 posicoes
+            arq.seek(posicao)
 
         print("\nNovo registro inserido com sucesso!")
         arq.close()

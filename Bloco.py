@@ -50,6 +50,12 @@ class Bloco (object):
             self.Registros[i].exibeRegistro()
 
     def exibeRegistrosDoBloco(self):
-        for i in range(0,QTD_REGISTROS_BLOCO):
+        for i in range(0,int(self.qtdRegistros)):
             if self.Registros[i].RA[0]!= "#" and self.Registros[i].RA[0]!= "_":
                 self.Registros[i].exibeRegistro()
+
+    def numeroRegistroInvalido(self):
+        for i in range(0,int(self.qtdRegistros)):
+            if self.Registros[i].RA[0]== "#":
+                return int(i)
+        return int(-1)
