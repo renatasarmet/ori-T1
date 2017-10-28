@@ -151,3 +151,33 @@ def remove(chave):
 
 
     return 0   # se não encontrou a chave ou se o arquivo nao existe
+
+def listagem():
+    if(os.path.exists("arquivo.txt")): # verifica se o arquivo existe
+        bloco = Bloco.Bloco()
+        posicao = 0
+        fim = 0
+        arq = open("arquivo.txt", 'r') # 'r' pois deseja apenas leitura
+        arq.seek(posicao)
+        while(not fim):
+            w = arq.read(TAM_CABECALHO_BLOCO) #le uma palavra correspondente ao cabecalho do bloco
+            if w == "":     #se for vazio, significa que acabou o arquivo
+                break
+            elif int(w) > 0:
+                arq.seek(posicao)
+                string = arq.read(TAM_BLOCO)
+
+                bloco.completaAtravesString(string)
+                bloco.exibeRegistrosDoBloco()
+
+                posicao += TAM_BLOCO
+            else:
+                fim = 1
+
+
+        arq.close()
+    else:
+        print("\nAinda não foi criado nenhum arquivo.\nAntes de listar, selecione a opção para criar!\n")
+
+
+    return None   # se não encontrou a chave ou se o arquivo nao existe

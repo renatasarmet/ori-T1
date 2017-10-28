@@ -48,3 +48,8 @@ class Bloco (object):
         print("Quantidade de registros: " + self.qtdRegistros)
         for i in range(0,QTD_REGISTROS_BLOCO):
             self.Registros[i].exibeRegistro()
+
+    def exibeRegistrosDoBloco(self):
+        for i in range(0,QTD_REGISTROS_BLOCO):
+            if self.Registros[i].RA[0]!= "#" and self.Registros[i].RA[0]!= "_":
+                self.Registros[i].exibeRegistro()
