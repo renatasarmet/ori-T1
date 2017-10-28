@@ -36,7 +36,6 @@ def insere():
 
         #abrindo arquivo e encontrando o bloco a ser inserido
         arq = open("arquivo.txt", 'r+') # 'r+' pois primeiro será feito leitura para encontrar o bloco e depois será inserido
-        #arq.write(registro.retornaString())
 
         arq.seek(posicao)
         while(not fim):
