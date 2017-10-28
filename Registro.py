@@ -35,3 +35,18 @@ class Registro (object):
         print("Nome: " + nome)
         print("Curso: " + curso)
         print("Cidade: " + cidade)
+
+    def completaAtravesString(self, string):
+        if(len(string) == TAM_REGISTRO):
+            inicio = 0
+            final = TAM_RA
+            self.RA = string[inicio:final]
+            inicio = final
+            final += TAM_NOME
+            self.nome = string[inicio:final]
+            inicio = final
+            final += TAM_CURSO
+            self.curso = string[inicio:final]
+            inicio = final
+            final += TAM_CIDADE
+            self.cidade = string[inicio:final]

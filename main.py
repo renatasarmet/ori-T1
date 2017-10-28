@@ -21,7 +21,6 @@ while(op!=0):
         if registro_encontrado != None:
             print("\nDados do registro encontrado:")
             registro_encontrado.exibeRegistro()
-            print("\n")
 
         else:
             print("\nNenhum registro com esse RA foi encontrado")
