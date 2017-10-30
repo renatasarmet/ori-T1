@@ -44,15 +44,12 @@ def insere():
 
             bloco.completaAtravesString(string)
 
-
-            #w = arq.read(TAM_CABECALHO_BLOCO) #le o cabeçalho do bloco
             if string == "":
                 bloco.formatarBloco()
                 fim = 1
                 # insere novo bloco
                 bloco.Registros[0] = novo_registro
                 bloco.incrementaQtdRegistros()
-                #arq.write(bloco.retornaString())
 
             elif int(bloco.qtdRegistros) == 5:
 
@@ -75,8 +72,6 @@ def insere():
                 else:                           # se nao existir registro invalido, coloca no final
                     bloco.Registros[int(bloco.qtdRegistros)] = novo_registro
                     bloco.incrementaQtdRegistros()
-
-                #arq.write(bloco.retornaString())
 
 
             if (not fim):
@@ -117,33 +112,9 @@ def busca(chave):
 
             posicao += TAM_BLOCO     # se nao encontrou nesse bloco vai para o próximo
 
-
-
-            # w = arq.read(TAM_CABECALHO_BLOCO) #le uma palavra correspondente ao cabecalho do bloco
-            # if w == "":     #se for vazio, significa que acabou o arquivo
-            #     break
-            # # elif int(w) > 0:
-            #     posicao += 1
-            #     for i in range(0,int(w)):   #percorre todos os registros daquele bloco
-            #         ra = arq.read(TAM_RA)   #le uma palavra correspondente ao tamanho do campo RA
-            #         if ra[0] != "#" and ra == chave: # pois "#" indica que o registro foi removido
-            #             encontrou = 1
-            #             break
-            #         else:
-            #             posicao += TAM_REGISTRO      #se nao encontrou, como o registro tem tamanho fixo de 100 bytes, vai pro proximo registro, isto é, dali 100 posicoes
-            #             arq.seek(posicao)
-            #     if (not encontrou) and int(w) == 5:
-            #         posicao += TAM_COMPLEMENTO_BLOCO
-            #         arq.seek(posicao)
-
         if encontrou:
             encontrou = 0
-            # arq.seek(posicao)
             registro = Registro.Registro("","","","")
-            # registro.RA = arq.read(TAM_RA)
-            # registro.nome = arq.read(TAM_NOME)
-            # registro.curso = arq.read(TAM_CURSO)
-            # registro.cidade = arq.read(TAM_CIDADE)
             registro = bloco.Registros[regBuscado]
             return registro
 
@@ -235,6 +206,7 @@ def compactacao():
         fim = 0
         arq = open("arquivo.txt", 'r+') # 'r+' pois deseja leitura e escrita
         posicaoVolta = os.path.getsize("arquivo.txt")   #inicia contagem no fim do arquivo
+        posicaoApagar = posicaoVolta
         qtdBlocos = posicaoVolta / TAM_BLOCO    # armazena quantidade de blocos ainda nao percorridos pelo loop da volta
         posicaoVolta -= TAM_BLOCO    #coloca contagem no inicio do ultimo bloco
         while(not fim):
@@ -274,6 +246,7 @@ def compactacao():
 
                         if w == "" or w[0] == "0":        #bloco vazio, deveria ser apagado
                             #apagar esse bloco
+                            posicaoApagar = posicaoVolta
                             pass
 
                         elif int(blocoVolta.qtdRegistros) > 0:
@@ -298,6 +271,8 @@ def compactacao():
                     w = blocoVolta.Registros[regTrocaPosicao].retornaString()   # pega o ultimo registro a ser copiado
                     blocoVolta.Registros[regTrocaPosicao].formatarRegistro()    # limpa ele
                     blocoVolta.decrementaQtdRegistros()                         # diminui a quantidade de registros no bloco
+                    if blocoVolta.qtdRegistros == "0":
+                        posicaoApagar = posicaoVolta
                     blocoIda.Registros[regInvalido].completaAtravesString(w)    # sobreescreve esse valor onde era o dado invalido
                     arq.seek(posicaoVolta)                                      # posiciona para escrever no arquivo o bloco da volta
                     arq.write(blocoVolta.retornaString())                       # escreve o bloco da volta no arquivo
@@ -306,6 +281,8 @@ def compactacao():
 
                 else:
                     blocoIda.decrementaQtdRegistros()                           # diminui a quantidade de registros no bloco
+                    if blocoIda.qtdRegistros == "0":
+                        posicaoApagar = posicaoIda
                     blocoIda.Registros[regInvalido].formatarRegistro()          # simplesmente formata o registro invalido
                     arq.seek(posicaoIda)                                        # posiciona para escrever no arquivo o bloco da ida
                     arq.write(blocoIda.retornaString())                         # escreve o bloco da ida no arquivo
@@ -313,6 +290,18 @@ def compactacao():
 
                 del(blocoVolta)
             del(blocoIda)
+
+
+        #depois que tudo está em ordem corretamente, isto é, todos os registros invalidos foram substituidos por validos do final, vamos sobreescrever o arquivo com apenas a parte utilizada
+        arq.seek(0)
+        w = arq.read(posicaoApagar)
+        arq.close()
+
+        arq = open("arquivo.txt", 'w') # 'w' pois deseja sobreescrever o que ja tem
+        arq.seek(0)
+        arq.write(w)
+        arq.close()
+
         print("Arquivo compactado")
         arq.close()
 
