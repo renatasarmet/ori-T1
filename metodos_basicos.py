@@ -22,10 +22,10 @@ def criaArquivo():
 def insere():
 
     if(os.path.exists("arquivo.txt")):
-        ra = input('\nDigite o RA: ')
-        nome = input('Digite o nome: ')
-        curso = input('Digite o curso: ')
-        cidade = input('Digite a cidade: ')
+        ra = input('\nDigite o RA (até 6 dígitos): ')
+        nome = input('Digite o nome (até 44 dígitos): ')
+        curso = input('Digite o curso (até 30 dígitos): ')
+        cidade = input('Digite a cidade (até 20 dígitos): ')
 
         novo_registro = Registro.Registro(ra, nome, curso, cidade)
 
@@ -282,7 +282,8 @@ def compactacao():
                 else:
                     blocoIda.decrementaQtdRegistros()                           # diminui a quantidade de registros no bloco
                     if blocoIda.qtdRegistros == "0":
-                        posicaoApagar = posicaoIda
+                        if posicaoIda < posicaoApagar:
+                            posicaoApagar = posicaoIda
                     blocoIda.Registros[regInvalido].formatarRegistro()          # simplesmente formata o registro invalido
                     arq.seek(posicaoIda)                                        # posiciona para escrever no arquivo o bloco da ida
                     arq.write(blocoIda.retornaString())                         # escreve o bloco da ida no arquivo

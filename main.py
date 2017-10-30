@@ -12,6 +12,7 @@ print("3 - buscar um registro")
 print("4 - remover um registro")
 print("5 - listar todos os registros")
 print("6 - realizar compactacao")
+print("7 - inserção em lote")
 op = int(input("Digite o que deseja fazer:"))
 
 while(op!=0):
@@ -43,6 +44,10 @@ while(op!=0):
         listagem()
     elif op == 6:
         compactacao()
+    elif op == 7:
+        n = int(input("\nDigite quantas inserções deseja fazer:"))
+        for i in range(0,n):
+            insere()
     else:
         print("\nOpcao invalida!")
 
@@ -53,4 +58,5 @@ while(op!=0):
     print("4 - remover um registro")
     print("5 - listar todos os registros")
     print("6 - realizar compactacao")
+    print("7 - inserção em lote")
     op = int(input("Digite o que deseja fazer:"))
