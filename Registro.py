@@ -56,3 +56,6 @@ class Registro (object):
         self.nome = tamanhoCorreto("",TAM_NOME)
         self.curso = tamanhoCorreto("",TAM_CURSO)
         self.cidade = tamanhoCorreto("",TAM_CIDADE)
+
+    def removeLogicamente(self):
+        self.RA = tamanhoCorreto("#", TAM_RA)
