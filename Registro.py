@@ -50,3 +50,9 @@ class Registro (object):
             inicio = final
             final += TAM_CIDADE
             self.cidade = string[inicio:final]
+
+    def formatarRegistro(self):
+        self.RA = tamanhoCorreto("", TAM_RA)
+        self.nome = tamanhoCorreto("",TAM_NOME)
+        self.curso = tamanhoCorreto("",TAM_CURSO)
+        self.cidade = tamanhoCorreto("",TAM_CIDADE)

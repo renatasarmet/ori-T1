@@ -3,6 +3,7 @@ from metodos_basicos import insere
 from metodos_basicos import busca
 from metodos_basicos import remove
 from metodos_basicos import listagem
+from metodos_basicos import compactacao
 
 print("0 - encerrar programa")
 print("1 - criar arquivo vazio ou limpar existente")
@@ -10,6 +11,7 @@ print("2 - inserir novo registro")
 print("3 - buscar um registro")
 print("4 - remover um registro")
 print("5 - listar todos os registros")
+print("6 - realizar compactacao")
 op = int(input("Digite o que deseja fazer:"))
 
 while(op!=0):
@@ -39,6 +41,8 @@ while(op!=0):
     elif op == 5:
         print("\nRegistros salvos:\n")
         listagem()
+    elif op == 6:
+        compactacao()
     else:
         print("\nOpcao invalida!")
 
@@ -48,4 +52,5 @@ while(op!=0):
     print("3 - buscar um registro pelo RA")
     print("4 - remover um registro")
     print("5 - listar todos os registros")
+    print("6 - realizar compactacao")
     op = int(input("Digite o que deseja fazer:"))
