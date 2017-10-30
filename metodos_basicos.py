@@ -224,7 +224,7 @@ def compactacao():
                 arq.seek(posicaoIda)
                 blocoIda.completaAtravesString(w)
 
-                if w == "" or w[0] == "_" or w[0] == "0":     #significa que acabou o arquivo
+                if w == "" or w[0] == "_":     #significa que acabou o arquivo
                     fim = 1
                     break
                 elif int(blocoIda.qtdRegistros) > 0:
@@ -234,8 +234,7 @@ def compactacao():
                         encontrou = 1
                         break
 
-                    else:
-                        posicaoIda += TAM_BLOCO     # se nao encontrou nesse bloco vai para o próximo
+                posicaoIda += TAM_BLOCO     # se nao encontrou nesse bloco vai para o próximo
 
             if encontrou:
                 encontrou = 0
@@ -267,7 +266,7 @@ def compactacao():
                         if (not achouUltimo):
                             qtdBlocos -= 1  # mais um bloco percorrido, entao menos um bloco restante
                             posicaoVolta -= TAM_BLOCO    #coloca a contagem no inicio do bloco anterior
-                            if posicaoVolta > 0 and posicaoVolta >= posicaoIda:
+                            if posicaoVolta >= posicaoIda:
                                 arq.seek(posicaoVolta)
                             else:
                                 break
@@ -276,7 +275,13 @@ def compactacao():
 
                 if achouUltimo:
 
+
+                    print("BOM, CHEGOU A HORA, VOU TROCAR ")
+
+
                     w = blocoVolta.Registros[regTrocaPosicao].retornaString()   # pega o ultimo registro a ser copiado
+                    print(w)
+                    print("POR " + blocoIda.Registros[regInvalido].retornaString())
                     blocoVolta.Registros[regTrocaPosicao].formatarRegistro()    # limpa ele
                     blocoVolta.decrementaQtdRegistros()                         # diminui a quantidade de registros no bloco
                     blocoIda.Registros[regInvalido].completaAtravesString(w)    # sobreescreve esse valor onde era o dado invalido
@@ -286,6 +291,7 @@ def compactacao():
                     arq.write(blocoIda.retornaString())                         # escreve o bloco da ida no arquivo
 
                 else:
+                    print("OPS, ELE VAI SOZINHO " + blocoIda.Registros[regInvalido].retornaString())
                     blocoIda.decrementaQtdRegistros()                           # diminui a quantidade de registros no bloco
                     blocoIda.Registros[regInvalido].formatarRegistro()          # simplesmente formata o registro invalido
                     arq.seek(posicaoIda)                                        # posiciona para escrever no arquivo o bloco da ida

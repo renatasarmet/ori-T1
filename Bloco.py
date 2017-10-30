@@ -62,7 +62,7 @@ class Bloco (object):
                 print("\n")
 
     def numeroRegistroInvalido(self):
-        for i in range(0,int(self.qtdRegistros)):
+        for i in range(0,QTD_REGISTROS_BLOCO):
             if self.Registros[i].RA[0]== "#":
                 return int(i)
         return int(-1)
