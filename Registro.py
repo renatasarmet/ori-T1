@@ -23,7 +23,7 @@ class Registro (object):
 
 
     def retornaString(self):
-        return self.RA + self.nome + self.curso + self.cidade
+        return self.RA + self.nome + self.curso + self.cidade       # retorna todo o registro como uma única string
 
     def exibeRegistro(self):
         RA = self.RA.replace("_","")
@@ -51,11 +51,11 @@ class Registro (object):
             final += TAM_CIDADE
             self.cidade = string[inicio:final]
 
-    def formatarRegistro(self):
+    def formatarRegistro(self):             # coloca o registro como vazio
         self.RA = tamanhoCorreto("", TAM_RA)
         self.nome = tamanhoCorreto("",TAM_NOME)
         self.curso = tamanhoCorreto("",TAM_CURSO)
         self.cidade = tamanhoCorreto("",TAM_CIDADE)
 
-    def removeLogicamente(self):
-        self.RA = tamanhoCorreto("#", TAM_RA)
+    def removeLogicamente(self):            # remocao logica
+        self.RA = tamanhoCorreto("#", TAM_RA)       # como o RA eh a chave, ele sera utilizado para marcacao na remocao logica
