@@ -27,19 +27,19 @@ def insere():
         curso = input('Digite o curso (até 30 dígitos): ')
         cidade = input('Digite a cidade (até 20 dígitos): ')
 
-        novo_registro = Registro.Registro(ra, nome, curso, cidade)
+        novo_registro = Registro.Registro(ra, nome, curso, cidade)      # insere os dados fornecidos no novo registro
 
         bloco = Bloco.Bloco()
 
         posicao = 0
         fim = 0
 
-        #abrindo arquivo e encontrando o bloco a ser inserido
+        # abrindo arquivo e encontrando o bloco a ser inserido
         arq = open("arquivo.txt", 'r+') # 'r+' pois primeiro será feito leitura para encontrar o bloco e depois será inserido
 
         while(not fim):
             arq.seek(posicao)
-            string = arq.read(TAM_BLOCO)
+            string = arq.read(TAM_BLOCO)        # le conteudo do tamanho do bloco
             arq.seek(posicao)
 
             bloco.completaAtravesString(string)
@@ -48,10 +48,10 @@ def insere():
                 bloco.formatarBloco()
                 fim = 1
                 # insere novo bloco
-                bloco.Registros[0] = novo_registro
+                bloco.Registros[0] = novo_registro      # insere registro no novo bloco 
                 bloco.incrementaQtdRegistros()
 
-            elif int(bloco.qtdRegistros) == 5:
+            elif int(bloco.qtdRegistros) == 5:      # quantidade maxima de registros possiveis num bloco
 
                 regInvalido = bloco.numeroRegistroInvalido() #verificando se o bloco possui algum registro invalido
 
@@ -78,7 +78,7 @@ def insere():
                 posicao += TAM_BLOCO      #se nao cabe mais nesse bloco, como ele tem tamanho fixo de 512 bytes, vai pro proximo bloco, isto é, dali 512 posicoes
 
 
-        arq.write(bloco.retornaString())
+        arq.write(bloco.retornaString())        # escreve registro no bloco
         print("\nNovo registro inserido com sucesso!")
         arq.close()
     else:
@@ -94,20 +94,20 @@ def busca(chave):
         while(not encontrou):
 
             arq.seek(posicao)
-            w = arq.read(TAM_BLOCO)
+            w = arq.read(TAM_BLOCO)     # le conteudo do tamanho do bloco, isto eh, 512 bytes
             arq.seek(posicao)
             bloco.completaAtravesString(w)
 
             if w == "":     #significa que acabou o arquivo
                 break
             elif int(bloco.qtdRegistros) > 0:
-                for i in range(0,int(bloco.qtdRegistros)):   #percorre todos os registros daquele bloco
+                for i in range(0,int(bloco.qtdRegistros)):   # percorre todos os registros daquele bloco
                     if bloco.Registros[i].RA[0] != "#" and bloco.Registros[i].RA == chave: # pois "#" indica que o registro foi removido
-                        regBuscado = i         #salva qual registro será removido
+                        regBuscado = i         # salva qual registro será removido
                         encontrou = 1
                         break
 
-                if int(bloco.qtdRegistros) < 5:       # se tem menos q 5 entao é o ultimo bloco. Se nao encontrou aqui, nao está no arquivo
+                if int(bloco.qtdRegistros) < 5:       # se tem menos que 5, entao é o ultimo bloco. Se nao encontrou aqui, nao está no arquivo
                     break
 
             posicao += TAM_BLOCO     # se nao encontrou nesse bloco vai para o próximo
@@ -116,7 +116,7 @@ def busca(chave):
             encontrou = 0
             registro = Registro.Registro("","","","")
             registro = bloco.Registros[regBuscado]
-            return registro
+            return registro         # retorna o registro procurado
 
         arq.close()
     else:
@@ -127,8 +127,8 @@ def busca(chave):
 
 
 def remove(chave):
-    if(os.path.exists("arquivo.txt")): # verifica se o arquivo existe
-        chave = tamanhoCorreto(chave,TAM_RA)     #transformando a chave recebida no mesmo formato do campo RA
+    if(os.path.exists("arquivo.txt")):          # verifica se o arquivo existe
+        chave = tamanhoCorreto(chave,TAM_RA)        # transformando a chave recebida no mesmo formato do campo RA
         posicao = 0
         encontrou = 0
         bloco = Bloco.Bloco()
@@ -140,17 +140,17 @@ def remove(chave):
             arq.seek(posicao)
             bloco.completaAtravesString(w)
 
-            if w == "" or w[0] == "0":     #significa que acabou o arquivo
+            if w == "" or w[0] == "0":     # significa que acabou o arquivo
                 break
             elif int(bloco.qtdRegistros) > 0:
-                for i in range(0,int(bloco.qtdRegistros)):   #percorre todos os registros daquele bloco
+                for i in range(0,int(bloco.qtdRegistros)):      # percorre todos os registros daquele bloco
                     if bloco.Registros[i].RA[0] != "#" and bloco.Registros[i].RA == chave: # pois "#" indica que o registro foi removido
-                        regRemovido = i         #salva qual registro será removido
+                        regRemovido = i         # salva qual registro será removido
                         encontrou = 1
                         break
 
 
-                if int(bloco.qtdRegistros) < 5:       # se tem menos q 5 entao é o ultimo bloco. Se nao encontrou aqui, nao está no arquivo
+                if int(bloco.qtdRegistros) < 5:       # se tem menos que 5 entao é o ultimo bloco. Se nao encontrou aqui, nao está no arquivo
                     break
 
             if (not encontrou):
@@ -172,19 +172,19 @@ def remove(chave):
     return 0   # se não encontrou a chave ou se o arquivo nao existe
 
 def listagem():
-    if(os.path.exists("arquivo.txt")): # verifica se o arquivo existe
+    if(os.path.exists("arquivo.txt")):          # verifica se o arquivo existe
         bloco = Bloco.Bloco()
         posicao = 0
         fim = 0
-        arq = open("arquivo.txt", 'r') # 'r' pois deseja apenas leitura
+        arq = open("arquivo.txt", 'r')          # 'r' pois deseja apenas leitura
         while(not fim):
             arq.seek(posicao)
             string = arq.read(TAM_BLOCO)
             bloco.completaAtravesString(string)
 
-            if string == "":     #se for vazio, significa que acabou o arquivo
+            if string == "":                    # se for vazio, significa que acabou o arquivo
                 fim = 1
-            elif int(bloco.qtdRegistros) > 0:
+            elif int(bloco.qtdRegistros) > 0:       # se o bloco nao estiver vazio, exibe os registros
                 bloco.exibeRegistrosDoBloco()
                 posicao += TAM_BLOCO
             else:
@@ -200,20 +200,20 @@ def listagem():
 
 
 def compactacao():
-    if(os.path.exists("arquivo.txt")): # verifica se o arquivo existe
+    if(os.path.exists("arquivo.txt")):          # verifica se o arquivo existe
         posicaoIda = 0
         encontrou = 0
         fim = 0
-        arq = open("arquivo.txt", 'r+') # 'r+' pois deseja leitura e escrita
-        posicaoVolta = os.path.getsize("arquivo.txt")   #inicia contagem no fim do arquivo
+        arq = open("arquivo.txt", 'r+')         # 'r+' pois deseja leitura e escrita
+        posicaoVolta = os.path.getsize("arquivo.txt")           # inicia contagem no fim do arquivo
         posicaoApagar = posicaoVolta
         qtdBlocos = posicaoVolta / TAM_BLOCO    # armazena quantidade de blocos ainda nao percorridos pelo loop da volta
-        posicaoVolta -= TAM_BLOCO    #coloca contagem no inicio do ultimo bloco
+        posicaoVolta -= TAM_BLOCO               # coloca contagem no inicio do ultimo bloco
         while(not fim):
             blocoIda = Bloco.Bloco()
             while(not encontrou):
                 arq.seek(posicaoIda)
-                w = arq.read(TAM_BLOCO)
+                w = arq.read(TAM_BLOCO)         # le conteudo do tamanho do bloco, isto eh, 512 bytes
                 arq.seek(posicaoIda)
                 blocoIda.completaAtravesString(w)
 
@@ -221,7 +221,7 @@ def compactacao():
                     fim = 1
                     break
                 elif int(blocoIda.qtdRegistros) > 0:
-                    regInvalido = blocoIda.numeroRegistroInvalido() #verificando se o bloco possui algum registro invalido
+                    regInvalido = blocoIda.numeroRegistroInvalido()     # verificando se o bloco possui algum registro invalido
 
                     if regInvalido != -1:           # se existir registro invalido, encontrou
                         encontrou = 1
@@ -229,7 +229,7 @@ def compactacao():
 
                 posicaoIda += TAM_BLOCO     # se nao encontrou nesse bloco vai para o próximo
 
-            if encontrou:
+            if encontrou:                   # se encontrou, eh preciso realizar a remocao 
                 encontrou = 0
                 achouUltimo = 0
                 blocoVolta = Bloco.Bloco()
@@ -244,27 +244,27 @@ def compactacao():
                         else:
                             blocoVolta = blocoIda
 
-                        if w == "" or w[0] == "0":        #bloco vazio, deveria ser apagado
+                        if w == "" or w[0] == "0":        # bloco vazio, deveria ser apagado
                             #apagar esse bloco
                             posicaoApagar = posicaoVolta
                             pass
 
                         elif int(blocoVolta.qtdRegistros) > 0:
-                            for i in range(int(blocoVolta.qtdRegistros)-1,-1,-1):             #percorre todos os registros daquele bloco em ordem descrescente
+                            for i in range(int(blocoVolta.qtdRegistros)-1,-1,-1):             # percorre todos os registros daquele bloco em ordem descrescente
                                 if blocoVolta.Registros[i].RA[0] != "#" and blocoVolta.Registros[i].RA[0] != "_":       # pois "#" indica que o registro teve remoção lógica e "_" ja nao tem registro
-                                    if posicaoVolta > posicaoIda or (posicaoVolta == posicaoIda and i > regInvalido):      #confere se nao está fazendo troca repetida ou pelo mesmo registro
+                                    if posicaoVolta > posicaoIda or (posicaoVolta == posicaoIda and i > regInvalido):      # confere se nao está fazendo troca repetida ou pelo mesmo registro
                                         regTrocaPosicao = i         # salva a posicao do ultimo registro que fará a troca com o inválido
                                         achouUltimo = 1
                                     break
 
                         if (not achouUltimo):
-                            qtdBlocos -= 1  # mais um bloco percorrido, entao menos um bloco restante
-                            posicaoVolta -= TAM_BLOCO    #coloca a contagem no inicio do bloco anterior
+                            qtdBlocos -= 1          # mais um bloco percorrido, entao menos um bloco restante
+                            posicaoVolta -= TAM_BLOCO           # coloca a contagem no inicio do bloco anterior
                             if posicaoVolta >= posicaoIda:
                                 arq.seek(posicaoVolta)
                             else:
                                 break
-                    else:   #todos os blocos ja foram percorridos
+                    else:           # todos os blocos ja foram percorridos
                         break
 
                 if achouUltimo:
@@ -293,12 +293,12 @@ def compactacao():
             del(blocoIda)
 
 
-        #depois que tudo está em ordem corretamente, isto é, todos os registros invalidos foram substituidos por validos do final, vamos sobreescrever o arquivo com apenas a parte utilizada
+        # depois que tudo esta em ordem corretamente, isto é, todos os registros invalidos foram substituidos por validos do final, vamos sobreescrever o arquivo com apenas a parte utilizada
         arq.seek(0)
         w = arq.read(posicaoApagar)
         arq.close()
 
-        arq = open("arquivo.txt", 'w') # 'w' pois deseja sobreescrever o que ja tem
+        arq = open("arquivo.txt", 'w') # 'w' pois deseja sobreescrever
         arq.seek(0)
         arq.write(w)
         arq.close()
