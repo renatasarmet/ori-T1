@@ -25,8 +25,8 @@ class Registro (object):
     def retornaString(self):
         return self.RA + self.nome + self.curso + self.cidade       # retorna todo o registro como uma única string
 
-    def exibeRegistro(self):
-        RA = self.RA.replace("_","")
+    def exibeRegistro(self):        
+        RA = self.RA.replace("_","")        # substitui '_' por ''
         nome = self.nome.replace("_","")
         curso = self.curso.replace("_","")
         cidade = self.cidade.replace("_","")
@@ -57,5 +57,5 @@ class Registro (object):
         self.curso = tamanhoCorreto("",TAM_CURSO)
         self.cidade = tamanhoCorreto("",TAM_CIDADE)
 
-    def removeLogicamente(self):            # remocao logica
+    def removeLogicamente(self):            # remocao logica, com marcação sinalizada por '#'
         self.RA = tamanhoCorreto("#", TAM_RA)       # como o RA é a chave, ele sera utilizado para marcacao na remocao logica
