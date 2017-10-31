@@ -13,7 +13,7 @@ class Bloco (object):
         self.completaRegistroVazio()    # coloca os 5 registros vazios
 
     def verificaPossibilidadeInsercao(self):
-        if int(self.qtdRegistros) < QTD_REGISTROS_BLOCO:
+        if int(self.qtdRegistros) < QTD_REGISTROS_BLOCO:        # verifica se ha espaço suficiente para inserir novo registro no bloco
             return 1
         else:
             return 0
@@ -21,9 +21,9 @@ class Bloco (object):
     def completaRegistroVazio(self):
         for i in range(0, QTD_REGISTROS_BLOCO):
             registro = Registro.Registro("","","","")
-            self.Registros.append(registro)
+            self.Registros.append(registro)             # preenchendo registros vazios
 
-    def retornaString(self):
+    def retornaString(self):    
         string = self.qtdRegistros
         for i in range(0,QTD_REGISTROS_BLOCO):
             string += self.Registros[i].retornaString()
@@ -52,7 +52,7 @@ class Bloco (object):
     def exibeBloco(self):
         print("Quantidade de registros: " + self.qtdRegistros)
         for i in range(0,QTD_REGISTROS_BLOCO):
-            self.Registros[i].exibeRegistro()
+            self.Registros[i].exibeRegistro()        # exibe conteúdo do bloco
             print("\n")
 
     def exibeRegistrosDoBloco(self):
@@ -70,7 +70,7 @@ class Bloco (object):
     def formatarTodosRegistros(self):
         for i in range(0, QTD_REGISTROS_BLOCO):
             registro = Registro.Registro("","","","")
-            self.Registros[i] = registro
+            self.Registros[i] = registro            # coloca todos os registros como vazio
 
     def formatarBloco(self):
         self.qtdRegistros = "0"
