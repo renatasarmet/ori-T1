@@ -3,17 +3,17 @@ import Bloco
 from metodos_extras import tamanhoCorreto
 import os.path
 
-TAM_RA = 6                  #definindo tamanho do campo RA
-TAM_NOME = 44               #definindo tamanho do campo nome
-TAM_CURSO = 30              #definindo tamanho do campo curso
-TAM_CIDADE = 20             #definindo tamanho do campo cidade
-TAM_REGISTRO = 100          #definindo tamanho total do registro
-TAM_BLOCO = 512             #definindo tamanho total do bloco
-TAM_CABECALHO_BLOCO = 1     #definindo tamanho do cabeçalho do bloco
-TAM_COMPLEMENTO_BLOCO = 11  #definindo tamanho do complemento do bloco
+TAM_RA = 6                  # definindo tamanho do campo RA (6 bytes)
+TAM_NOME = 44               # definindo tamanho do campo nome (44 bytes)
+TAM_CURSO = 30              # definindo tamanho do campo curso (30 bytes)
+TAM_CIDADE = 20             # definindo tamanho do campo cidade (20 bytes)
+TAM_REGISTRO = 100          # definindo tamanho total do registro (100 bytes)
+TAM_BLOCO = 512             # definindo tamanho total do bloco (512 bytes)
+TAM_CABECALHO_BLOCO = 1     # definindo tamanho do cabeçalho do bloco (1 byte)
+TAM_COMPLEMENTO_BLOCO = 11  # definindo tamanho do complemento do bloco (11 bytes)
 
 def criaArquivo():
-    #criando arquivo vazio
+    # criando arquivo vazio
     arq = open("arquivo.txt", 'w')
     arq.close()
     print("\nArquivo vazio criado com sucesso\n")
@@ -75,7 +75,7 @@ def insere():
 
 
             if (not fim):
-                posicao += TAM_BLOCO      #se nao cabe mais nesse bloco, como ele tem tamanho fixo de 512 bytes, vai pro proximo bloco, isto é, dali 512 posicoes
+                posicao += TAM_BLOCO      # se nao cabe mais nesse bloco, como ele tem tamanho fixo de 512 bytes, vai pro proximo bloco, isto é, dali 512 posicoes
 
 
         arq.write(bloco.retornaString())        # escreve registro no bloco
@@ -86,7 +86,7 @@ def insere():
 
 def busca(chave):
     if(os.path.exists("arquivo.txt")): # verifica se o arquivo existe
-        chave = tamanhoCorreto(chave,TAM_RA)     #transformando a chave recebida no mesmo formato do campo RA
+        chave = tamanhoCorreto(chave,TAM_RA)     # transformando a chave recebida no mesmo formato do campo RA
         posicao = 0
         encontrou = 0
         bloco = Bloco.Bloco()
@@ -98,7 +98,7 @@ def busca(chave):
             arq.seek(posicao)
             bloco.completaAtravesString(w)
 
-            if w == "":     #significa que acabou o arquivo
+            if w == "":     # significa que acabou o arquivo
                 break
             elif int(bloco.qtdRegistros) > 0:
                 for i in range(0,int(bloco.qtdRegistros)):   # percorre todos os registros daquele bloco
