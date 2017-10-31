@@ -37,7 +37,7 @@ class Registro (object):
         print("Cidade: " + cidade)
 
     def completaAtravesString(self, string):
-        if(len(string) == TAM_REGISTRO):
+        if(len(string) == TAM_REGISTRO):        # se a string tiver o mesmo numero de bytes que o tamanho do registro (100 bytes), preenche os campos
             inicio = 0
             final = TAM_RA
             self.RA = string[inicio:final]
@@ -58,4 +58,4 @@ class Registro (object):
         self.cidade = tamanhoCorreto("",TAM_CIDADE)
 
     def removeLogicamente(self):            # remocao logica
-        self.RA = tamanhoCorreto("#", TAM_RA)       # como o RA eh a chave, ele sera utilizado para marcacao na remocao logica
+        self.RA = tamanhoCorreto("#", TAM_RA)       # como o RA é a chave, ele sera utilizado para marcacao na remocao logica
