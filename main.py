@@ -1,8 +1,9 @@
 # Organização e Recuperação da Informação - Turma A.
 # TRABALHO 1 - Implementação de arquivo sem ordenação.
-    # Isadora Eliziário Gallerani - 726542 
-    # Renata Sarmet Smiderle Mendes - 726586 
+    # Isadora Eliziário Gallerani - 726542
+    # Renata Sarmet Smiderle Mendes - 726586
 
+# importando metodos que serao utilizados
 from metodos_basicos import criaArquivo
 from metodos_basicos import insere
 from metodos_basicos import busca
@@ -27,10 +28,10 @@ while(op!=0):       # opcao 0 - encerra o programa
         criaArquivo()
     elif op == 2:   # opcao 2 - insere novo registro
         insere()
-    elif op == 3:   # opcao 3 - busca por registro sera realizada atraves da chave - o RA
+    elif op == 3:   # opcao 3 - busca por registro atraves da chave - o RA
         ra_busca = input("\nDigite o RA que deseja buscar:")
         registro_encontrado = busca(ra_busca)       # procura o RA fornecido pelo usuario
-        if registro_encontrado != None:             # encontrando o RA, fornece o registro
+        if registro_encontrado != None:             # encontrando o RA, fornece os dados do registro
             print("\nDados do registro encontrado:")
             registro_encontrado.exibeRegistro()
 
@@ -43,7 +44,7 @@ while(op!=0):       # opcao 0 - encerra o programa
         if encontrou:
             print("\nRegistro removido com sucesso!")       # encontrado o RA, remove-se o registro
 
-        else:       # RA nao encontrado, consequentemente nao foi encontrado registro correspondente 
+        else:       # RA nao encontrado, consequentemente nao foi encontrado registro correspondente
             print("\nNenhum registro com esse RA foi encontrado")
 
     elif op == 5:       # opcao 5 - listagem de registros
@@ -56,8 +57,9 @@ while(op!=0):       # opcao 0 - encerra o programa
         for i in range(0,n):
             insere()        # insere registros de acordo com a quantidade de insercoes fornecidas
     else:
-        print("\nOpcao invalida!")      # outra opcao diferente digitada, acusa-se invalidez 
+        print("\nOpcao invalida!")      # outra opcao diferente digitada, acusa-se invalidez
 
+    # menu de opcoes para o usuario
     print("\n0 - encerrar programa")
     print("1 - criar arquivo vazio ou limpar existente")
     print("2 - inserir novo registro")
